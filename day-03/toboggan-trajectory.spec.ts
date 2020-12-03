@@ -1,4 +1,4 @@
-import { countTrees } from './toboggan-trajectory'
+import { countTrees, multipleTreesOnSlopes, slopes } from './toboggan-trajectory'
 
 describe('toboggan trajectory', () => {
   const topography: string[] = `
@@ -15,7 +15,17 @@ describe('toboggan trajectory', () => {
     .#..#...#.#
   `.split('\n').slice(1, -1).map(s => s.trim())
 
-  it('counts trees on cheap slope', () => {
-    expect(countTrees(topography)).toEqual(7)
+  it.each<[right: number, down: number, expected: number]>([
+    [1, 1, 2],
+    [3, 1, 7],
+    [5, 1, 3],
+    [7, 1, 4],
+    [1, 2, 2],
+  ])('counts trees on a slope', (right, down, expected) => {
+    expect(countTrees(topography, right, down)).toEqual(expected)
+  })
+
+  it('multiplies trees encountered', () => {
+    expect(multipleTreesOnSlopes(topography, slopes)).toEqual(336)
   })
 })
