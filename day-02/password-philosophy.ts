@@ -13,8 +13,8 @@ export const isPasswordTValid = (pass: string, char: string, p1: number, p2: num
   return !!(first ^ second)
 }
 
-export const validPasswords = (passwords: PasswordValidatorArgs[], validator: PasswordValidator): number =>
-  passwords.reduce<number>((count, args) => validator(...args) ? count + 1 : count, 0)
+export const validPasswords = (passwordsArgs: PasswordValidatorArgs[], validator: PasswordValidator): number =>
+  passwordsArgs.filter((args) => validator(...args)).length
 
 export const str2args = (string: string): PasswordValidatorArgs => {
   const [range, char, pass] = string.split(' ')
