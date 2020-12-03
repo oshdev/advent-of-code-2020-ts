@@ -1,4 +1,5 @@
-export type PasswordValidatorArgs = Parameters<typeof isPasswordValid>
+export type PasswordValidator = (pass: string, char: string, n1: number, n2: number) => boolean
+export type PasswordValidatorArgs = Parameters<PasswordValidator>
 
 export const isPasswordValid = (pass: string, char: string, min: number, max: number): boolean => {
   const count = pass.split('').
@@ -12,11 +13,8 @@ export const isPasswordTValid = (pass: string, char: string, p1: number, p2: num
   return !!(first ^ second)
 }
 
-export const validPasswords = (passwords: PasswordValidatorArgs[]): number =>
-  passwords.reduce<number>((count, args) => isPasswordValid(...args) ? count + 1 : count, 0)
-
-export const validTPasswords = (passwords: PasswordValidatorArgs[]): number =>
-  passwords.reduce<number>((count, args) => isPasswordTValid(...args) ? count + 1 : count, 0)
+export const validPasswords = (passwords: PasswordValidatorArgs[], validator: PasswordValidator): number =>
+  passwords.reduce<number>((count, args) => validator(...args) ? count + 1 : count, 0)
 
 export const str2args = (string: string): PasswordValidatorArgs => {
   const [range, char, pass] = string.split(' ')

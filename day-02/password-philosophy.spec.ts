@@ -1,4 +1,4 @@
-import { isPasswordTValid, isPasswordValid, str2args, validPasswords, validTPasswords } from './password-philosophy'
+import { isPasswordTValid, isPasswordValid, str2args, validPasswords } from './password-philosophy'
 
 describe('validate password', () => {
   const testCases: { args: Parameters<typeof isPasswordValid>, isValid: boolean, isValidT: boolean }[] = [
@@ -21,14 +21,14 @@ describe('validate password', () => {
     const input = testCases.map(c => c.args)
     const expected = testCases.filter(c => c.isValid).length
 
-    expect(validPasswords(input)).toEqual(expected)
+    expect(validPasswords(input, isPasswordValid)).toEqual(expected)
   })
 
   it('counts valid toboggan passwords', () => {
     const input = testCases.map(c => c.args)
     const expected = testCases.filter(c => c.isValidT).length
 
-    expect(validTPasswords(input)).toEqual(expected)
+    expect(validPasswords(input, isPasswordTValid)).toEqual(expected)
   })
 
   it('splits line into validator input', () => {
