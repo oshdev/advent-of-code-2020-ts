@@ -1,16 +1,20 @@
-import { isPasswordValid, str2args, validPasswords } from './password-philosophy'
+import { isPasswordTValid, isPasswordValid, str2args, validPasswords, validTPasswords } from './password-philosophy'
 
 describe('validate password', () => {
-  const testCases: { args: Parameters<typeof isPasswordValid>, isValid: boolean }[] = [
-    { args: ['abc', 'a', 1, 2], isValid: true },
-    { args: ['abcabc', 'a', 2, 3], isValid: true },
-    { args: ['abc', 'd', 1, 2], isValid: false },
-    { args: ['aaa', 'a', 1, 2], isValid: false },
-    { args: ['abcabc', 'a', 1, 1], isValid: false },
+  const testCases: { args: Parameters<typeof isPasswordValid>, isValid: boolean, isValidT: boolean }[] = [
+    { args: ['abc', 'a', 1, 2], isValid: true, isValidT: true },
+    { args: ['abcabc', 'a', 2, 3], isValid: true, isValidT: false },
+    { args: ['abc', 'd', 1, 2], isValid: false, isValidT: false },
+    { args: ['aaa', 'a', 1, 2], isValid: false, isValidT: false },
+    { args: ['abcabc', 'a', 1, 1], isValid: false, isValidT: false },
   ]
 
   it.each(testCases)('validates password', ({ args, isValid }) => {
     expect(isPasswordValid(...args)).toBe(isValid)
+  })
+
+  it.each(testCases)('validates toboggan password', ({ args, isValidT }) => {
+    expect(isPasswordTValid(...args)).toBe(isValidT)
   })
 
   it('counts valid passwords', () => {
@@ -18,6 +22,13 @@ describe('validate password', () => {
     const expected = testCases.filter(c => c.isValid).length
 
     expect(validPasswords(input)).toEqual(expected)
+  })
+
+  it('counts valid toboggan passwords', () => {
+    const input = testCases.map(c => c.args)
+    const expected = testCases.filter(c => c.isValidT).length
+
+    expect(validTPasswords(input)).toEqual(expected)
   })
 
   it('splits line into validator input', () => {
