@@ -7,10 +7,10 @@ export const calculateSeatId = (str: string): number => calculateId(
 
 const calculateBinary = (str: string, upper: string): number =>
   Array.from(str).
-    reduce<{ column: number, i: number }>(({ column, i }, ch) => ({
-      column: ch === upper ? column + i : column,
+    reduce<{ value: number, i: number }>(({ value, i }, ch) => ({
+      value: ch === upper ? value + i : value,
       i: i >> 1,
-    }), { column: 0, i: 2 ** (str.length - 1) }).column
+    }), { value: 0, i: 2 ** (str.length - 1) }).value
 
 export const calculateColumn = (str: string): number => calculateBinary(str, 'R')
 export const calculateRow = (str: string): number => calculateBinary(str, 'B')
