@@ -1,4 +1,4 @@
-import { calculateColumn, calculateId, calculateRow, calculateSeatId, highestId } from './binary-boarding'
+import { calculateColumn, calculateId, calculateRow, calculateSeatId, findMissing, highestId } from './binary-boarding'
 
 describe('binary boarding', () => {
   it.each<[row: number, column: number, expected: number]>([
@@ -39,5 +39,11 @@ describe('binary boarding', () => {
   it('calculates highest id', () => {
     const strs = ['FBFBBFFRLR', 'BFFFBBFRRR', 'FFFBBBFRRR', 'BBFFBBFRLL']
     expect(highestId(strs)).toBe(820)
+  })
+
+  it('finds missing seat id', () => {
+    const strs = ['FFFFFFFRLL', 'FFFFFFFRLR', 'FFFFFFFRRL', 'FFFFFFFRRR']
+    const missing = strs.splice(2, 1)[0]
+    expect(findMissing(strs)).toEqual(calculateSeatId(missing))
   })
 })

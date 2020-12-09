@@ -17,3 +17,12 @@ export const calculateColumn = (str: string): number => calculateBinary(str, 'R'
 export const calculateRow = (str: string): number => calculateBinary(str, 'B')
 
 export const highestId = (strs: string[]): number => Math.max(...strs.map(calculateSeatId))
+
+export const findMissing = (strs: string[]): number => {
+  const sorted = strs.map(calculateSeatId).sort((a, b) => a - b)
+  for (let i = 1; i < sorted.length - 1; i++) {
+    const current = sorted[i]
+    const next = sorted[i + 1]
+    if (next !== current + 1) return current + 1
+  }
+}
