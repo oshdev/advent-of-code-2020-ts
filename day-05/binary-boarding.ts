@@ -6,7 +6,7 @@ export const calculateSeatId = (str: string): number => calculateId(
 )
 
 const calculateBinary = (str: string, upper: string): number =>
-  Array.from(str).
+  str.split('').
     reduce<{ value: number, i: number }>(({ value, i }, ch) => ({
       value: ch === upper ? value + i : value,
       i: i >> 1,
