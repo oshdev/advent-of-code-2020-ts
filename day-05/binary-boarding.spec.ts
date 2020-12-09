@@ -6,7 +6,7 @@ describe('binary boarding', () => {
     [70, 7, 567],
     [14, 7, 119],
     [102, 4, 820],
-  ])('calculates id', (row, column, expected) => {
+  ])('calculates id %d*8+%d => %d', (row, column, expected) => {
     expect(calculateId(row, column)).toBe(expected)
   })
 
@@ -14,7 +14,7 @@ describe('binary boarding', () => {
     ['RLR', 5],
     ['RRR', 7],
     ['RLL', 4],
-  ])('calculates column', (str, expected) => {
+  ])('calculates column %s => %d', (str, expected) => {
     expect(calculateColumn(str)).toBe(expected)
   })
 
@@ -23,7 +23,7 @@ describe('binary boarding', () => {
     ['BFFFBBF', 70],
     ['FFFBBBF', 14],
     ['BBFFBBF', 102],
-  ])('calculates column', (str, expected) => {
+  ])('calculates column %s => %d', (str, expected) => {
     expect(calculateRow(str)).toBe(expected)
   })
 

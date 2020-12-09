@@ -5,12 +5,13 @@ export const calculateSeatId = (str: string): number => calculateId(
   calculateColumn(str.substring(7)),
 )
 
-const calculateBinary = (str: string, upper: string): number =>
-  str.split('').
-    reduce<{ value: number, i: number }>(({ value, i }, ch) => ({
-      value: ch === upper ? value + i : value,
-      i: i >> 1,
-    }), { value: 0, i: 2 ** (str.length - 1) }).value
+const calculateBinary = (str: string, one: string): number => {
+  let i = 2 ** str.length
+  return str.split('').reduce<number>((value, ch) => {
+    i >>= 1
+    return ch === one ? value + i : value
+  }, 0)
+}
 
 export const calculateColumn = (str: string): number => calculateBinary(str, 'R')
 export const calculateRow = (str: string): number => calculateBinary(str, 'B')
