@@ -1,4 +1,4 @@
-import { countAnswers, answers2groups, sumAllAnswers } from './custom-customs'
+import { answers2groups, countAllAnswers, countCommonAnswers, sumAllAnswers, sumCommonAnswers } from './custom-customs'
 
 describe('custom customs', () => {
   const input = `abc
@@ -15,7 +15,8 @@ a
 a
 a
 
-b`
+b
+`
 
   it('creates groups from input', () => {
     expect(answers2groups(input)).toEqual([
@@ -31,13 +32,27 @@ b`
     ['abc', 3],
     ['a\nb\nc', 3],
     ['ab\nac', 3],
-    ['a\na\na\na', 3],
+    ['a\na\na\na', 1],
     ['b', 1],
-  ])('counts answers in a group %s => %d', (groupAnswers, expected) => {
-    expect(countAnswers(groupAnswers)).toEqual(expected)
+  ])('counts any answers in a group %s => %d', (groupAnswers, expected) => {
+    expect(countAllAnswers(groupAnswers)).toEqual(expected)
   })
 
-  it('sums the counts', () => {
+  it('sums all the counts', () => {
     expect(sumAllAnswers(input)).toEqual(11)
+  })
+
+  it.each<[groupAnswers: string, expected: number]>([
+    ['abc', 3],
+    ['a\nb\nc', 0],
+    ['ab\nac', 1],
+    ['a\na\na\na', 1],
+    ['b', 1],
+  ])('counts common answers in a group %s => %d', (groupAnswers, expected) => {
+    expect(countCommonAnswers(groupAnswers)).toEqual(expected)
+  })
+
+  it('sums the common counts', () => {
+    expect(sumCommonAnswers(input)).toEqual(6)
   })
 })
